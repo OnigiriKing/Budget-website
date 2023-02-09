@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Budget gadget</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fasthand&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <h4 class="date"></h4>
+        <div class="moneyAmount">
+          <h1 class="budgetSumm">+0</h1>
+        </div class="icomeExpenses">
+        <div class="income">
+          <h3 class="wordsAmount">INCOME </h3>
+          <h3 class="incomeAmount">0<h4 class="percentege"></h4></h3>
+        </div>
+        <div class="expenses">
+          <h3 class="wordsAmount">EXPENSES </h3>
+          <h3 class="expensesAmount">0<h4 class="percentege" id="percentege">%</h4></h3>
+        </div>
+      </div>
+      <div class="inputMenu">
+        <select name="selectSign" id="selectSign" onchange="getSign.get();">
+          <option value="+">+</option>
+          <option value="-">-</option>
+        </select>
+        <input type="text" class="nameInput" placeholder="Add description">
+        <input type="text" class="amountInput" placeholder="Value">
+        <button class="imgBtn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634264.png" alt="icon"></button>
+      </div>
+      <div class="outputMenu">
+        <div class="incomeListWrapper">
+          <h3>INCOME</h3>
+          <div id="incomeList">
+            <!-- item 1 -->
+            <div class="incomeItem">
+            <div class="incomeItemDescription incomeItemAll">Discription</div>
+            <div class="incomeItemSumm incomeItemAll">+ 100,000</div>
+            <button class="deleteIncomeItem"></button>
+          </div>
+          <!-- item 2 -->
+                      <div class="incomeItem">
+            <div class="incomeItemDescription incomeItemAll">Discription2</div>
+            <div class="incomeItemSumm incomeItemAll">+ 200,000</div>
+            <button class="deleteIncomeItem"></button>
+          </div>
+          
+          </div>
+        </div>
+        <div class="expensesListWrapper">
+          <h3>EXPENSES</h3>
+          <div id="expensesList">
+            <div>hello</div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
