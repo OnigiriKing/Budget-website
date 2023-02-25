@@ -163,7 +163,7 @@ div button img {
   margin: 0 auto;
 }
 
-#incomeList {
+.bothLists {
   display: flex;
   flex-direction: column;
   padding: 5px;
@@ -174,7 +174,8 @@ div button img {
   border-top: rgb(209, 207, 207) 1px solid;
 }
 
-.incomeItem {
+
+.allNewItem {
   border-bottom: rgb(209, 207, 207) 1px solid;
   margin: auto;
   display: flex;
@@ -190,27 +191,38 @@ div button img {
 .incomeItem:hover .deleteIncomeItem {
   display: flex;
 }
+.incomeItem:hover .incomeItemSumm {
+  transform: translateX(-10px);
+}
 
-.incomeItemDescription {
+.allDescription {
   position: absolute;
   left: 15%;
 }
 
-.incomeItemSumm {
+.allItemSumm {
   position: relative;
   right: -35%;
   margin: auto;
 }
 
-.deleteIncomeItem {
-  width: 30px;
+.allItemDelete {
+  width: 20px;
   display: none;
+  justify-content: center;
 }
 
+.deleteButtonImg {
+  width: 20px;
+}
 
+.allItemDelete:hover {
+  background: rgba(128, 128, 128, 0.243);
+}
 
-
-
+.allItemDelete {
+  border: none;
+}
 
 
 
@@ -236,17 +248,19 @@ div button img {
   margin: 0 auto;
 }
 
-#expensesList {
-  border-top: rgb(209, 207, 207) 1px solid;
-  border-bottom: rgb(209, 207, 207) 1px solid;
-  display: flex;
-  flex-direction: column;
-  padding: 5px;
-  width: 90%;
-  min-width: 200px;
-  justify-content: center;
-  align-items: center;
+.expenseItem:hover {
+  background: rgb(244, 244, 244);
 }
+.expenseItem:hover .deleteExpenseItem {
+  display: flex;
+}
+.expenseItem:hover .expenseItemSumm {
+  transform: translateX(-10px);
+}
+
+
+
+
 
 
 
