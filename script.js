@@ -28,20 +28,20 @@ var getSign = (function () {
 })();
 
 var budgetControll = (function () {
-  // var data = {
-  //   allItems: {
-  //     allIncome: [],
-  //     allExpenses: [],
-  //   },
-  //   total: {
-  //     budget : 0,
-  //     income: 0,
-  //     expenses: 0,
-  //   },
-  // };
-  var budget = 0;
-  var income = 0;
-  var expenses = 0;
+  var data = {
+    allItems: {
+      allIncome: [],
+      allExpenses: [],
+    },
+    total: {
+      budget : 0,
+      income: 0,
+      expenses: 0,
+    },
+  };
+  // var budget = 0;
+  // var income = 0;
+  // var expenses = 0;
   const date = new Date().toLocaleDateString("fr-FR");
   var time = (document.querySelector(
     ".date"
