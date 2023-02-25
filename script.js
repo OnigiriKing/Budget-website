@@ -42,6 +42,12 @@ var budgetControll = (function () {
   // var budget = 0;
   // var income = 0;
   // var expenses = 0;
+
+  function NewItem(sign, id, dis) {
+
+  }
+
+
   const date = new Date().toLocaleDateString("fr-FR");
   var time = (document.querySelector(
     ".date"
