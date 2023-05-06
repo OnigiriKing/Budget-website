@@ -39,12 +39,12 @@ var budgetControll = (function () {
       exp: [],
     },
     total: {
-      income: 0,
-      expenses: 0,
+      inc: 0,
+      exp: 0,
     },
   };
 
-  var budget = data.total.income - data.total.expenses;
+  var budget = data.total.inc - data.total.exp;
   var Income = function (id, des, val) {
     this.id = id;
     this.des = des;
@@ -96,7 +96,7 @@ var budgetControll = (function () {
 
   //? Upodate budget HTML
   function updateHTML() {
-    budget = data.total.income - data.total.expenses;
+    budget = data.total.inc - data.total.exp;
     if (budget >= 0) {
       document.querySelector(
         ".budgetSumm"
@@ -107,12 +107,12 @@ var budgetControll = (function () {
         budget.toLocaleString();
     }
     document.querySelector(".incomeAmount").textContent =
-      data.total.income.toLocaleString();
+      data.total.inc.toLocaleString();
     document.querySelector(".expensesAmount").textContent =
-      data.total.expenses.toLocaleString();
-    if (data.total.income > 0 && data.total.expenses > 0) {
+      data.total.exp.toLocaleString();
+    if (data.total.inc > 0 && data.total.exp > 0) {
       var persentage = Math.floor(
-        (data.total.expenses * 100) / data.total.income
+        (data.total.exp * 100) / data.total.inc
       );
     }
       else {
@@ -160,11 +160,11 @@ var budgetControll = (function () {
       nameValue !== ""
     ) {
       if (signtType == "inc") {
-        data.total.income += amountValue;
+        data.total.inc += amountValue;
         inputNull();
       }
       if (signtType == "exp") {
-        data.total.expenses += amountValue;
+        data.total.exp += amountValue;
         inputNull();
       }
     }
@@ -180,25 +180,19 @@ var budgetControll = (function () {
 
   // ? delete income/expense
   function deleteItem(event) {
-          if (event.target.parentNode.id.includes("inc")) {
-            let id = parseInt(event.target.parentNode.id.match(/\d+/));
-            index = data.allItems.inc.findIndex((obj) => obj.id === id);
-            data.total.income -= data.allItems.inc[index].val;
-            data.allItems.inc.splice(index, 1);
-            document
-              .getElementById(`${event.target.parentNode.parentNode.id}`)
-              .remove();
-            updateHTML();
-          } else {
-            let id = parseInt(event.target.parentNode.id.match(/\d+/));
-            index = data.allItems.exp.findIndex((obj) => obj.id === id);
-            data.total.expenses -= data.allItems.exp[index].val;
-            data.allItems.exp.splice(index, 1);
-            document
-              .getElementById(`${event.target.parentNode.parentNode.id}`)
-              .remove();
-            updateHTML();
-          }
+    if (event.target.nodeName === "IMG") {
+    let split, type, id, index;
+    split = event.target.parentNode.id.split("-");
+    type = split[0];
+    id = parseInt(split[1]);
+    index = data.allItems[type].findIndex((obj) => obj.id === id);
+    data.total[type] -= data.allItems[type][index].val;
+    data.allItems[type].splice(index, 1);
+    document
+      .getElementById(`${event.target.parentNode.parentNode.id}`)
+      .remove();
+    updateHTML();
+    }
     }
 
   return {
