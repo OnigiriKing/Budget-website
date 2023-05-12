@@ -54,6 +54,20 @@ var budgetControll = (function () {
     this.id = id;
     this.des = des;
     this.val = val;
+    this.persentage = 0;
+  };
+
+  // ! I didn't inclode totalInc in this function
+  Expenses.prototype.calcpersentage = function () {
+    if (data.total.inc > 0) {
+      this.persentage = Math.round((this.val / data.total.inc) * 100);
+    } else {
+      this.persentage = 0;
+    }
+  };
+
+  Expenses.prototype.getPersentage = function () {
+    return this.persentage;
   };
 
   // ? new item
@@ -94,6 +108,33 @@ var budgetControll = (function () {
     // document.querySelector(".nameInput").value = "";
   }
 
+  // ? Update percentage
+  function updatePersentage() {
+    data.allItems.exp.forEach(function (cur) {
+      cur.calcpersentage();
+    });
+    
+    var persent = data.allItems.exp.map(function (cur) {
+      return cur.getPersentage();
+    });
+
+    var fields = document.querySelectorAll(".expenseItemPercent");
+
+    var nodeList = function (list, fn) {
+      for (let i = 0; i < list.length; i++) {
+        fn(list[i], i);
+      }
+    };
+
+      if (data.total.inc != 0) {
+        nodeList(fields, function (curr, index) {
+          curr.textContent = "-" + persent[index] + "%";
+        });
+      } else {
+        curr.textContent = 0 + "%";
+      }
+  }
+
   //? Upodate budget HTML
   function updateHTML() {
     budget = data.total.inc - data.total.exp;
@@ -111,22 +152,21 @@ var budgetControll = (function () {
     document.querySelector(".expensesAmount").textContent =
       data.total.exp.toLocaleString();
     if (data.total.inc > 0 && data.total.exp > 0) {
-      var persentage = Math.floor(
-        (data.total.exp * 100) / data.total.inc
-      );
+      var persentage = Math.floor((data.total.exp * 100) / data.total.inc);
+    } else {
+      document.querySelector("#percentege").textContent = "%";
     }
-      else {
-        document.querySelector("#percentege").textContent = "%";
-      }
-      if (persentage > 998) {
-        document.querySelector("#percentege").textContent = `>999%`;
-      } else if (persentage < 998) {
-        document.querySelector("#percentege").textContent = `-${persentage}%`;
-      }
+    if (persentage > 998) {
+      document.querySelector("#percentege").textContent = `>999%`;
+    } else if (persentage < 998) {
+      document.querySelector("#percentege").textContent = `-${persentage}%`;
     }
 
+    updatePersentage();
+  }
+
   function addDOM(obj) {
-    var newHtml;
+    let newHtml, persent;
     if (getSign.signValue() === "inc") {
       newHtml = `<div class="incomeItem allNewItem" ID = "inc${obj.id}div">
             <div class="incomeItemDescription allDescription">${obj.des}</div>
@@ -136,9 +176,15 @@ var budgetControll = (function () {
         .getElementById("incomeList")
         .insertAdjacentHTML("beforeend", newHtml);
     } else {
+      if (data.total.inc == 0) {
+        persent = 0;
+      } else {
+        persent = parseInt((obj.val * 100) / data.total.inc);
+      }
       newHtml = `<div class="expenseItem allNewItem" ID = "exp${obj.id}div">
             <div class="expenseItemDescription allDescription">${obj.des}</div>
             <div class="expenseItemSumm allItemSumm">- ${obj.val}</div>
+            <div class="expenseItemPercent">-0%</div>
             <button class="deleteExpenseItem allItemDelete" ID = "exp-${obj.id}"><img src="https://icons.veryicon.com/png/o/commerce-shopping/small-icons-with-highlights/delete-184.png" alt="deletePic" class="deleteButtonImg"></button></div>`;
       return document
         .getElementById("expensesList")
@@ -181,19 +227,19 @@ var budgetControll = (function () {
   // ? delete income/expense
   function deleteItem(event) {
     if (event.target.nodeName === "IMG") {
-    let split, type, id, index;
-    split = event.target.parentNode.id.split("-");
-    type = split[0];
-    id = parseInt(split[1]);
-    index = data.allItems[type].findIndex((obj) => obj.id === id);
-    data.total[type] -= data.allItems[type][index].val;
-    data.allItems[type].splice(index, 1);
-    document
-      .getElementById(`${event.target.parentNode.parentNode.id}`)
-      .remove();
-    updateHTML();
+      let split, type, id, index;
+      split = event.target.parentNode.id.split("-");
+      type = split[0];
+      id = parseInt(split[1]);
+      index = data.allItems[type].findIndex((obj) => obj.id === id);
+      data.total[type] -= data.allItems[type][index].val;
+      data.allItems[type].splice(index, 1);
+      document
+        .getElementById(`${event.target.parentNode.parentNode.id}`)
+        .remove();
+      updateHTML();
     }
-    }
+  }
 
   return {
     budget: function () {
@@ -204,6 +250,10 @@ var budgetControll = (function () {
     },
     updateHTML: function () {
       return updateHTML();
+    },
+    // !DELETE
+    data: function () {
+      return data;
     },
     deleteItem: function () {
       return deleteItem(event);

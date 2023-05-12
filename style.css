@@ -198,11 +198,12 @@ div button img {
 .allDescription {
   position: absolute;
   left: 15%;
+  width: 70px;
 }
 
 .allItemSumm {
   position: relative;
-  right: -35%;
+  right: -28%;
   margin: auto;
 }
 
@@ -256,6 +257,12 @@ div button img {
 }
 .expenseItem:hover .expenseItemSumm {
   transform: translateX(-10px);
+}
+
+.expenseItemPercent {
+  background-color: rgb(246, 148, 148);
+  margin: 0 10px;
+  font-size: 13px;
 }
 
 
